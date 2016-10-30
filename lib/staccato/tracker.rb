@@ -126,6 +126,10 @@ module Staccato
     def timing(options = {}, &block)
       Staccato::Timing.new(self, options).track!(&block)
     end
+    
+    def build_timing(options = {}, &block)
+      Staccato::Timing.new(self, options, &block)
+    end
 
     # Build an ecommerce transaction
     #

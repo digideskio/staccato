@@ -25,15 +25,19 @@ module Staccato
       :timing
     end
 
+    def measure(&block)
+      start_at = Time.now
+      block.call
+      end_at = Time.now
+
+      self.options.time = (end_at - start_at).to_i*1000
+    end
+
     # tracks the timing hit type
     # @param block [#call] block is executed and time recorded
     def track!(&block)
       if block_given?
-        start_at = Time.now
-        block.call
-        end_at = Time.now
-
-        self.options.time = (end_at - start_at).to_i*1000
+        measure block
       end
 
       super
