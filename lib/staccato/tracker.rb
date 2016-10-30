@@ -103,7 +103,11 @@ module Staccato
     #   * fatal (optional) was the exception fatal? boolean, defaults to false
     # @return [<Net::HTTPOK] the GA `/collect` endpoint always returns a 200
     def exception(options = {})
-      Staccato::Exception.new(self, options).track!
+      build_exception(options).track!
+    end
+
+    def build_exception(options = {})
+      Staccato::Exception.new(self, options)
     end
 
     # Track timing
@@ -212,7 +216,11 @@ module Staccato
     def social(options = {}); end
     # (see Tracker#exception)
     def exception(options = {}); end
+    def build_exception(options = {}); end
     # (see Tracker#timing)
+    def build_timing(options = {}, &block)
+      yield if block_given?
+    end
     def timing(options = {}, &block)
       yield if block_given?
     end
